@@ -355,14 +355,14 @@ let checkoutGet = async (req, res,next) => {
                 if (flag === 1) {
                     flag = 0
 
-                    res.render('Checkout', {
+                    res.render('checkout', {
                         user, category, addresses, selectedItems, billTotal, itemCount, Adreessmessage, discountPrice,
                         discountedTotal,
                        selectedAddressTypes,  userDetail, err: true,coupon
                     })
                 } else {
 
-                    res.render('Checkout', {
+                    res.render('checkout', {
                         user, category, addresses, selectedItems, billTotal, itemCount, Adreessmessage, discountPrice,
                         discountedTotal,
                          selectedAddressTypes,  userDetail, err: '',coupon
