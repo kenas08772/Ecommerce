@@ -1,0 +1,336 @@
+<%- include ('adminHeader')%>
+
+
+<section class="content-main">
+    <form action="/admin/updateProduct" method="post" enctype="multipart/form-data"
+        onsubmit="return productValidation()">
+        <div class="row">
+            <div class="col-9">
+                <div class="content-header">
+                    <h2 class="content-title">Edit the Product</h2>
+                    <div>
+
+                        <button type="submit" class="btn btn-md rounded font-sm hover-up">Update</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="mb-4">
+                            <label for="product_title" class="form-label">Product title</label>
+                            <input name="name" type="text" placeholder="Type here" value="<%= product.name  %>"
+                                class="form-control" id="productName">
+                            <p id="nameErr"></p>
+                        </div>
+                        <div class="row gx-3">
+                            <div class="col-md-4 mb-3">
+                                <label for="product_size" class="form-label">Quantity</label>
+                                <input type="text" name="stock" value="<%= product.stock %>" placeholder="Type here"
+                                    class="form-control" id="product_size">
+                                <p id="stockErr"></p>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label for="product_brand" class="form-label">Brand</label>
+                            <input type="text" name="brand" placeholder="Type here" value="<%= product.brand  %>"
+                                class="form-control" id="product_brand">
+                            <p id="brandErr"></p>
+                        </div>
+                        <input type="hidden" id="id" name="id" value="<%= product._id %>">
+
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div>
+                            <label class="form-label">Description</label>
+                            <textarea name="description" placeholder="Type here" class="form-control" rows="4"
+                                id="product_description"><%-product.description  %></textarea>
+                            <p id="descriptionErr"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div>
+                            <label class="form-label">Cover Image</label>
+                            <input type="file" accept="image/*" id="images"  value="<%=product.coverimage  %>"
+                                name="coverimage" multiple>
+                            <img src="<%=product.coverimage%>" alt="">
+                            <p id="imageErr"></p>
+                            <div>
+                                <button type="button" id="cancelCoverImage"
+                                    class="btn btn-sm rounded font-sm hover-up cancel-button">Cancel Cover
+                                    Image</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div>
+                            <label class="form-label">Thumbnail image</label>
+                            <input type="file" accept="image/*" id="images" value="<%=product.coverimage  %>"
+                                name="coverimage" multiple>
+                            <% if (product.images) { %>
+                            <% product.images.forEach(element => { %>
+                            <img src="<%= element %>" alt="">
+                            <% }) %>
+                            <% } else { %>
+                            <p></p>
+                            <% } %>
+
+
+                            <p id="imageErr"></p>
+                            <div>
+                                <button type="button" id="cancelCoverImage"
+                                    class="btn btn-sm rounded font-sm hover-up cancel-button">Cancel Cover
+                                    Image</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="mb-4">
+                            <label class="form-label" for="product_price">Price</label>
+                            <input type="text" name="price" value="<%=product.price  %>" placeholder="Type here"
+                                class="form-control" id="product_price">
+                            <p id="priceErr"></p>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label" for="product_status">Category</label>
+                            <select class="form-select" name="category" id="product_status">
+                                <p id="categoryErr"></p>
+                                
+                                <% categories.forEach(n => { %>
+                                    <% if (product.category === n.name) { %>
+                                        <!-- Preselect the category if it matches the product's category -->
+                                        <option selected><%= n.name %></option>
+                                    <% } else { %>
+                                        <option><%= n.name %></option>
+                                    <% } %>
+                                <% }) %>
+                            </select>
+                        </div>
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div>
+                                    <label class="form-label">Offer</label>
+                                    <input type="text" name="offer">
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+
+
+    <script>
+
+
+
+function cancelCoverImage() {
+            const coverImageInput = document.getElementById("coverImages");
+            coverImageInput.value = null; 
+            const coverImageErrorElement = document.getElementById("coverImageErr");
+            coverImageErrorElement.innerText = ""; 
+           
+        }
+
+
+        document.getElementById("cancelImages").onclick = function () {
+            const imagesInput = document.querySelector("input[name='images']");
+            imagesInput.value = null; // Reset the input value to clear the selected files
+            const showImages = document.getElementById("showimages");
+            showImages.src = '';
+            if (cropper) {
+                cropper.destroy();
+            }
+
+        };
+
+
+
+        let originalData
+
+        $(document).ready(function () {
+            // Store the original form data when the page loads
+            originalData = $('form').serialize();
+
+           
+            $('form :input').change(function () {
+                
+                if (originalData !== $('form').serialize()) {
+                    
+                    $('#updateButton').prop('disabled', false);
+                } else {
+                    // If the form data is the same as the original, disable the update button
+                    $('#updateButton').prop('disabled', true);
+                }
+            });
+
+            // Add event listener specifically for file inputs (images)
+            $('form :file').change(function () {
+                // Enable the update button when an image is selected
+                $('#updateButton').prop('disabled', false);
+            });
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+
+        function productValidation() {
+
+            // Reset error messages
+            resetErrorMessages();
+
+            // Get form elements
+            const productName = document.getElementById("productName");
+            const productSize = document.getElementById("product_size");
+            const productBrand = document.getElementById("product_brand");
+            const productDescription = document.getElementById("product_description");
+            const productPrice = document.getElementById("product_price");
+            const productStatus = document.getElementById("product_status");
+            const coverImage = document.getElementById(
+                "images"); // Assuming 'images' is the ID of the cover image input
+            const productImages = document.querySelector(
+                "input[name='images']"); // Assuming 'images' is the name of the additional images input
+
+            // Define regex patterns
+            const nameRegex = /^[A-Za-z\s]+$/;
+            const quantityRegex = /^[0-9]+$/;
+            const brandRegex = /^[A-Za-z\s]+$/;
+            const descriptionRegex = /^.{10,}$/; // At least 10 characters
+            const priceRegex = /^[0-9]+(\.[0-9]{1,2})?$/; // Decimal number with up to two decimal places
+
+            if (originalData !== $('form').serialize()) {
+                return true;
+            }
+
+            // If no changes in non-image fields, check if an image is selected
+            const imageInput = $('form :file')[0];
+            if (imageInput.files.length > 0) {
+                return true; // Image selected, allow form submission
+            }
+
+            // If no changes in both non-image fields and no image selected, prevent form submission
+            return false;
+        }
+        // Validate product title
+        if (!validateField(productName.value, nameRegex, "nameErr", "Invalid Product Title Format")) {
+            return false;
+        }
+
+        // Validate quantity
+        if (!validateField(productSize.value, quantityRegex, "stockErr", "Invalid Quantity Format")) {
+            return false;
+        }
+
+        // Validate brand
+        if (!validateField(productBrand.value, brandRegex, "brandErr", "Invalid Brand Format")) {
+            return false;
+        }
+
+        // Validate description
+        if (!validateField(productDescription.value, descriptionRegex, "descriptionErr",
+                "Description must be at least 10 characters")) {
+            return false;
+        }
+
+        // Validate cover image
+
+
+        // Validate price
+        if (!validateField(productPrice.value, priceRegex, "priceErr", "Invalid Price Format")) {
+            return false;
+        }
+
+        // Validate category
+        if (!validateField(productStatus.value.trim(), "", "categoryErr", "Category is required.")) {
+            return false;
+        }
+
+        // Continue validation for other fields as needed
+
+        // If all validations pass, you can proceed with submitting the form
+        return true;
+
+
+        // Helper function to validate a field with regex
+        function validateField(value, regex, errorId, errorMessage) {
+            const errorElement = document.getElementById(errorId);
+
+            if (value.trim() === "") {
+                displayError(errorElement, "Please enter the required information...");
+                return false;
+            }
+
+            if (regex && !regex.test(value)) {
+                displayError(errorElement, errorMessage);
+                return false;
+            }
+
+            return true;
+        }
+
+        // Helper function to validate file input
+        function validateFile(fileInput, allowedExtensions, errorId, errorMessage) {
+            const errorElement = document.getElementById(errorId);
+            const files = fileInput.files;
+
+            if (files.length === 0) {
+                displayError(errorElement, "File is required.");
+                return false;
+            }
+
+            const fileExtension = files[0].name.split(".").pop().toLowerCase();
+            if (!allowedExtensions.includes(fileExtension)) {
+                displayError(errorElement, errorMessage);
+                return false;
+            }
+
+            return true;
+        }
+
+        // Helper function to display error message
+        function displayError(errorElement, message) {
+            errorElement.style.color = "red";
+            errorElement.innerHTML = message;
+            setTimeout(() => {
+                errorElement.innerHTML = "";
+            }, 5000);
+        }
+
+        // Helper function to reset error messages
+        function resetErrorMessages() {
+            const errorElements = document.querySelectorAll(
+                "[id$='Err']"); // Select all elements with an ID ending with 'Err'
+            errorElements.forEach((element) => {
+                element.innerText = "";
+            });
+        }
+    </script>
+
+
+
+    <%- include('adminFooter')%>

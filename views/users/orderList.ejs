@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <title>Order Listing</title>
+</head>
+<body>
+
+<div class="container mt-4">
+  <h2>Order Listing</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Order ID</th>
+        <th>Order Date</th>
+        <th>Total Amount</th>
+        <th>Payment Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% orderDetails.forEach(order => { %>
+        <tr>
+          <td><%= order.orderId %></td>
+          <td><%= order.orderDate %></td>
+          <td>$<%= order.billTotal.toFixed(2) %></td>
+          <td>
+            <% if (order.paymentStatus === 'Success') { %>
+              <span class="text-success"><%= order.paymentStatus %></span>
+            <% } else { %>
+              <span class="text-danger"><%= order.paymentStatus %></span>
+            <% } %>
+          </td>
+          <td>
+            <a href="/order/details/<%= order._id %>" class="btn btn-info btn-sm">Details</a>
+          </td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+</body>
+</html>
