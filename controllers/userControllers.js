@@ -572,7 +572,7 @@ const userProfileGet = async (req, res) => {
 
 
 
-    res.status(200).render('userProfile', {
+    res.status(200).render('userprofile', {
       category,
       user,
       addresses,
