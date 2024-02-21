@@ -408,23 +408,31 @@ const homePage = async (req, res) => {
 const userShop = async (req, res) => {
   try {
     const search = (req.query.search) ? new RegExp('^' + req.query.search, 'i') : ''
+    let sort = {_id:1}
+    console.log(req.query.sort);
+    if(req.query.sort) {
+      if(req.query.sort === 'low') sort = {price:1}
+      else if (req.query.sort === 'high') sort = {price:-1}
+      else if (req.query.sort === 'new') sort = {_id:-1}
+      else if (req.query.sort === 'relevance') sort = {_id:1} 
+    } 
+    console.log(sort);
     let products = []
     if (search != '') {
       products = await ProductModel.find({
           name: search
-        })
+        }).sort(sort)
         .populate({
           path: "category",
           select: "name",
         });
     } else {
-      products = await ProductModel.find({})
+      products = await ProductModel.find({}).sort(sort)
       .populate({
         path: "category",
         select: "name",
       });
     }
-    console.log('__________________', products);
     const totalProducts = products.length
 
     const categories = await categoryModel.find();

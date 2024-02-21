@@ -172,7 +172,7 @@
                 <div class="row align-items-center">
                     <div class="col-xl-3 col-lg-4">
                         <div class="header-info">
-                            
+
                         </div>
                     </div>
                     <div class="col-xl-6 col-lg-4">
@@ -204,15 +204,15 @@
                                 <!-- <li><i class="fi-rs-user"></i><a href="page-login-register.html">Log In / Sign Up</a>
                                 </li> -->
                                 <ul>
-                                    <% if(userEmail === null) { %>
-                                    <li><i class="fi-rs-user"></i><a href="/signup">Sign Up</a></li>
-                                    <li><i class="fi-rs-user"></i><a href="/login">Log In </a></li>
-                                    <% } else {  %>
-    
-                                   
-    
-                                    <li><i class="fi-rs-user"></i><a href="/logout">Logout</a></li>
-                                    <% } %>
+                                    <% if(userEmail===null) { %>
+                                        <li><i class="fi-rs-user"></i><a href="/signup">Sign Up</a></li>
+                                        <li><i class="fi-rs-user"></i><a href="/login">Log In </a></li>
+                                        <% } else { %>
+
+
+
+                                            <li><i class="fi-rs-user"></i><a href="/logout">Logout</a></li>
+                                            <% } %>
                                 </ul>
                             </ul>
                         </div>
@@ -237,7 +237,7 @@
                                     <option>All Categories</option>
 
                                 </select>
-                                <input type="text" placeholder="Search for items..." value="" id="searchInput" >
+                                <input type="text" placeholder="Search for items..." value="" id="searchInput">
                                 <button class="btn btn-success" type="button" onclick="searchProduct()">Search</button>
                             </form>
                         </div>
@@ -246,15 +246,15 @@
                                 <div class="header-action-icon-2">
                                     <a href="/cart/whishlistGet">
                                         <img class="svgInject" alt="Evara" src="assets/imgs/theme/icons/icon-heart.svg">
-                                   
+
                                     </a>
-                                </div>  
+                                </div>
                                 <div class="header-action-icon-2">
                                     <a class="mini-cart-icon" href="/cart">
                                         <img alt="Evara" src="assets/imgs/theme/icons/icon-cart.svg">
-                                     
+
                                     </a>
-                                
+
                                 </div>
                             </div>
                         </div>
@@ -287,10 +287,10 @@
                                                 <li class="mega-menu-col col-lg-7">
                                                     <ul class="d-lg-flex">
                                                         <li class="mega-menu-col col-lg-6">
-                                                           
+
                                                         </li>
                                                         <li class="mega-menu-col col-lg-6">
-                                                        
+
                                                         </li>
                                                     </ul>
                                                 </li>
@@ -325,7 +325,7 @@
                                                 <li class="mega-menu-col col-lg-7">
                                                     <ul class="d-lg-flex">
                                                         <li class="mega-menu-col col-lg-6">
-                                                           
+
                                                         </li>
                                                         <li class="mega-menu-col col-lg-6">
                                                             <ul>
@@ -471,14 +471,14 @@
                         <div class="main-menu main-menu-padding-1 main-menu-lh-2 d-none d-lg-block">
                             <nav>
                                 <ul>
-                                    <li><a class="active" href="/">Home </i></a>
-                                       
+                                    <li><a class="active" href="/home">Home </i></a>
+
                                     </li>
                                     <li>
                                         <a href="page-about.html">About</a>
                                     </li>
                                     <li><a href="shop-grid-right.html">Shop </i></a>
-                                        
+
                                     </li>
 
 
@@ -505,7 +505,7 @@
                             <div class="header-action-icon-2">
                                 <a class="mini-cart-icon" href="shop-cart.html">
                                     <img alt="Evara" src="assets/imgs/theme/icons/icon-cart.svg">
-                                    
+
                                 </a>
                                 <div class="cart-dropdown-wrap cart-dropdown-hm2">
                                     <ul>
@@ -610,11 +610,11 @@
                         <ul class="mobile-menu">
                             <li class="menu-item-has-children"><span class="menu-expand"></span><a
                                     href="index.html">Home</a>
-                               
+
                             </li>
                             <li class="menu-item-has-children"><span class="menu-expand"></span><a
                                     href="shop-grid-right.html">shop</a>
-                                
+
                             </li>
                             <li class="menu-item-has-children"><span class="menu-expand"></span><a href="#">Mega
                                     menu</a>
@@ -650,7 +650,7 @@
                             </li>
                             <li class="menu-item-has-children"><span class="menu-expand"></span><a
                                     href="blog-category-fullwidth.html">Blog</a>
-                                
+
                             </li>
                             <li class="menu-item-has-children"><span class="menu-expand"></span><a href="#">Pages</a>
                                 <ul class="dropdown">
@@ -702,7 +702,7 @@
         <div class="page-header breadcrumb-wrap">
             <div class="container">
                 <div class="breadcrumb">
-                    
+
                 </div>
             </div>
         </div>
@@ -712,13 +712,13 @@
                     <div class="col-lg-9">
                         <div class="shop-product-fillter">
                             <div class="totall-product">
-                               
-                                
+
+
                             </div>
                             <div class="sort-by-product-area">
-                                
+
                                 <div class="sort-by-cover">
-                                   
+
                                     <div class="sort-by-dropdown">
                                         <ul>
                                             <li><a class="active" href="#">Featured</a></li>
@@ -772,52 +772,56 @@
                             </div> -->
 
 
-                          <div class="row product-grid-3">
-    <% products?.forEach((element,index)=> { %>
-   
-        <% if(element.isListed  ) { %>
-            <div class="col-lg-4 col-md-4 col-12 col-sm-6">
-                <div class="product-cart-wrap mb-30">
-                    <div class="product-img-action-wrap">
-                        <div class="product-img product-img-zoom">
-                            <a href="/details/<%= element._id  %>">
-                                <img class="default-img" src="<%= element.coverimage %>" alt="">
-                                <img class="hover-img" src="<%= element.images[0] %>" alt="">
-                            </a>
-                        </div>
-                        <div class="product-action-1">
-                            <a href="#" aria-label="Add To Wishlist"
-                                onclick="addToWishlist(event, '<%= element._id %>')"
-                                class="action-btn hover-up"><i class="fi-rs-heart"></i></a>
-                        </div>
-                       <div class="product-badges product-badges-position product-badges-mrg">
-                            <span class="hot">Hot</span>
-                        </div>
-                    </div>
-                    <div class="product-content-wrap">
-                        <div class="product-category">
-                            <a href="#">
-                                <%= element.category ? element.category.name : 'Category Name Not Available' %>
-                            </a>
-                        </div>
-                        <h2><a href="#">
-                                <%= element.name %>
-                            </a></h2>
-                        <% if(element.countInStock===0) {  %>
-                            <span style="color: red;">Out of stock </span>
-                        <% } %>
-                        <div class="product-price">
-                            <span>INR <%= element.price %> </span>
-                            <span class="old-price">
-                                <%= element.basePrice %>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        <% } %>
-    <% }) %>
-</div>
+                            <div class="row product-grid-3">
+                                <% products?.forEach((element,index)=> { %>
+
+                                    <% if(element.isListed ) { %>
+                                        <div class="col-lg-4 col-md-4 col-12 col-sm-6">
+                                            <div class="product-cart-wrap mb-30">
+                                                <div class="product-img-action-wrap">
+                                                    <div class="product-img product-img-zoom">
+                                                        <a href="/details/<%= element._id  %>">
+                                                            <img class="default-img" src="<%= element.coverimage %>"
+                                                                alt="">
+                                                            <img class="hover-img" src="<%= element.images[0] %>"
+                                                                alt="">
+                                                        </a>
+                                                    </div>
+                                                    <div class="product-action-1">
+                                                        <a href="#" aria-label="Add To Wishlist"
+                                                            onclick="addToWishlist(event, '<%= element._id %>')"
+                                                            class="action-btn hover-up"><i class="fi-rs-heart"></i></a>
+                                                    </div>
+                                                    <div
+                                                        class="product-badges product-badges-position product-badges-mrg">
+                                                        <span class="hot">Hot</span>
+                                                    </div>
+                                                </div>
+                                                <div class="product-content-wrap">
+                                                    <div class="product-category">
+                                                        <a href="#">
+                                                            <%= element.category ? element.category.name
+                                                                : 'Category Name Not Available' %>
+                                                        </a>
+                                                    </div>
+                                                    <h2><a href="#">
+                                                            <%= element.name %>
+                                                        </a></h2>
+                                                    <% if(element.countInStock===0) { %>
+                                                        <span style="color: red;">Out of stock </span>
+                                                        <% } %>
+                                                            <div class="product-price">
+                                                                <span>INR <%= element.price %> </span>
+                                                                <span class="old-price">
+                                                                    <%= element.basePrice %>
+                                                                </span>
+                                                            </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <% } %>
+                                            <% }) %>
+                            </div>
 
 
 
@@ -828,22 +832,49 @@
                         <!--pagination-->
                         <div class="pagination-area mt-15 mb-sm-5 mb-lg-0">
                             <nav aria-label="Page navigation example">
-                                
+
                             </nav>
                         </div>
                     </div>
                     <div class="col-lg-3 primary-sidebar sticky-sidebar">
                         <div class="row">
-                            <div class="col-lg-12 col-mg-6"></div>
+                            <div class="col-lg-12 col-mg-6">
+                                <div class="dropdown">
+
+                                </div>
+                            </div>
                             <div class="col-lg-12 col-mg-6"></div>
                         </div>
-                        
+
                         <!-- Fillter By Price -->
-                        
+
                         <!-- Product sidebar Widget -->
-                       
+
+                        <script>
+                            const sortFunction = () => {
+                                const value = document.getElementById('sortOrder').value;
+                                const query = window.location.search || '';
+                                const sortParam = 'sort=' + value;
+                        
+                                const newQuery = query.includes('sort=') ?
+                                    query.replace(/sort=[^&]*/, sortParam) :
+                                    (query ? query + '&&' + sortParam : '?' + sortParam);
+                        
+                                const newUrl = '/Shop' + newQuery;
+                               
+                                window.location.href = newUrl;
+                            };
+                        </script>
+                        
+
                         <div class="banner-img wow fadeIn mb-45 animated d-lg-block d-none">
-                            
+                            <label for="sortOrder">Sort by Price:</label>
+                            <select id="sortOrder" onchange="sortFunction()">
+                                <option value="relevance">Relevance</option>
+                                <option value="low">Low to High</option>
+                                <option value="high">High to Low</option>
+                                <option value="new">Newest</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -984,7 +1015,7 @@
     <script>
         const searchProduct = () => {
             const search = document.getElementById('searchInput').value
-            location.href = '/Shop?search='+search
+            location.href = '/Shop?search=' + search
         }
     </script>
     <!-- Vendor JS-->

@@ -978,7 +978,7 @@ console.log("hdffffffffffffffffffffffffffffffffffff");
 const CouponApply = async (req, res , next) => {
   try {
     const couponCode = req.body.couponData;
-    console.log(couponCode);
+
     const today = new Date();
 
     const coupon = await Coupon.findOne({
@@ -986,6 +986,7 @@ const CouponApply = async (req, res , next) => {
       status: 'Active',
       validity: { $gte: today }
     });
+    console.log(coupon,'____________________________________________');
     if (!coupon) {
       return res.status(201).json({
         success: false,
@@ -1010,7 +1011,6 @@ const CouponApply = async (req, res , next) => {
   } catch (error) {
     console.log(error.message);
     res.status(500)
-    next()
   }
 };
 

@@ -874,7 +874,96 @@
     <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 
-    <script>
+    <script> 
+    function applyCoupon() {
+            const userCouponCode = document.getElementById('userCouponCode').value;
+            const couponData = userCouponCode
+       
+            fetch('/coupon-apply', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    couponData
+                })
+            }).then((response) => {
+               
+                if (response.status == 200) {
+                    Swal.fire({
+                        title: 'Success',
+                        text: 'Coupon added successfully',
+                        icon: 'success',
+                    }).then(() => {
+                        location.reload();
+                    });
+                } else if (response.status == 201) {
+                    Swal.fire({
+                        title: 'Not valid ',
+                        text: 'Coupon is not valid',
+                        icon: 'error',
+                    }).then(() => {
+                        location.reload();
+                    });
+                }
+
+            }).then((result) => {
+
+                console.log(result);
+
+            }).catch((error) => {
+                console.error('Error applying coupon:', error);
+            });
+        }
+
+
+    
+    
+    
+    
+    function copyCouponCode(couponCode) {
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(couponCode)
+                .then(() => {
+                    Swal.fire({
+                        title: 'Success',
+                        text: "Coupon code copied to clipboard: " + couponCode,
+                        icon: 'success',
+                    }).then(() => {
+                        location.reload();
+                    });
+                })
+                .catch(err => {
+                    Swal.fire({
+                        title: 'Error',
+                        text: "Coupon code copied to clipboard: Error" + couponCode,
+                        icon: 'error',
+                    }).then(() => {
+                        location.reload();
+                    });
+                });
+        } else {
+            var tempTextarea = document.createElement("textarea");
+            tempTextarea.value = couponCode;
+            document.body.appendChild(tempTextarea);
+            tempTextarea.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempTextarea);
+
+            Swal.fire({
+                title: 'Success',
+                text: "Coupon code copied to clipboard: " + couponCode,
+                icon: 'success',
+            }).then(() => {
+                location.relod()
+            })
+        }
+    }
+
+
+
+
+
         $(document).ready(function () {
             const form2 = document.getElementById('addressForm')
 
